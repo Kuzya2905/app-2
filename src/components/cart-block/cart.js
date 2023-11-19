@@ -1,14 +1,17 @@
+import React from "react";
+
 function Cart({
   cartItems,
   onCloseCart,
   stateCart,
   onDeleteItemCart,
-  sumCart,
+  totalSumCart,
 }) {
   if (stateCart) {
     const body = document.querySelector("body");
     body.className = "body-hidden";
   }
+  console.log(totalSumCart);
 
   return (
     <div
@@ -29,7 +32,6 @@ function Cart({
             onClick={onCloseCart}
           />
         </h2>
-        {console.log(cartItems)}
         {cartItems.length === 0 ? (
           <div className="cart-empty">
             <img
@@ -73,7 +75,7 @@ function Cart({
               <div className="total-sum">
                 <p>Итого:</p>
                 <span className="line"></span>
-                <span className="sum">{sumCart(cartItems)} руб.</span>
+                <span className="sum">{totalSumCart} руб.</span>
               </div>
               <div className="tax">
                 <p>Налог 5%:</p>

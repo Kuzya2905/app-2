@@ -7,6 +7,10 @@ body {
   background: #E7F6FF;
   box-sizing: border-box;
 }
+a {
+  text-decoration: none;
+  color: #000;
+}
 .body-hidden {
   overflow: hidden;
 }
@@ -137,7 +141,7 @@ h1, h2, h3 {
 
 
 // Заголовок карточек
-.title-cards {
+.top-block-cards {
   margin-top: 39px;
   padding: 0 60px;
   padding-top: 60px;
@@ -192,7 +196,7 @@ h1, h2, h3 {
     position: absolute;
     right: 0px;
     max-width: 500px;
-    height: 100%;
+    height: 100vh;
     background-color: rgba(255, 255, 255, 1);
     @keyframes openCart {
       from { right: -500px; }
@@ -259,7 +263,7 @@ h1, h2, h3 {
     .cards-cart {
       display: flex;
       flex-direction: column;
-      height: 100vh;
+      height: 90%;
     }
     .card-cart {
       height: 150px;

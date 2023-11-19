@@ -1,7 +1,7 @@
 import style from "./card.module.scss";
-import React from "react";
+import React, { useEffect } from "react";
 
-function Card({ obj, onAddToCart, onAddToFavorites }) {
+function Card({ obj, onAddToCart, onAddToFavorites, stateCart }) {
   const [stateBtnPlus, setStateBtnPlus] = React.useState(false);
   const [isFavorite, setIsFavorite] = React.useState(false);
 
@@ -15,14 +15,20 @@ function Card({ obj, onAddToCart, onAddToFavorites }) {
     onAddToFavorites(obj);
   };
 
+  useEffect(() => {
+    if (stateCart) {
+      setStateBtnPlus(false);
+    }
+  }, [stateCart]);
+
   return (
     <div className={style.card}>
       <button className={style.like}>
         <img
           src={
             isFavorite
-              ? "./images/card-1-unliked.svg"
-              : "./images/card-1-liked.svg"
+              ? "./images/card-1-liked.svg"
+              : "./images/card-1-unliked.svg"
           }
           alt=""
           onClick={onClickFavotite}
