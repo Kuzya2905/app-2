@@ -1,7 +1,7 @@
 import Card from '../components/Card/Card';
 import Carousel from "../components/Carousel/Carousel";
 
-function Home({searchItems, setSearchValue, searchValue, visibleItems, onAddToFavorites, onAddToCart, cartItems, stateCart}) {
+function Home({searchItems, setSearchValue, searchValue, visibleItems, onAddToFavorites, onAddToCart, cartItems, stateCart, favorites}) {
   return (
     <main>
         <Carousel />
@@ -24,12 +24,14 @@ function Home({searchItems, setSearchValue, searchValue, visibleItems, onAddToFa
             {visibleItems.map((obj, index) => {
               return (
                 <Card
+                  visibleItems = {visibleItems}
                   stateCart={stateCart}
                   onAddToFavorites={onAddToFavorites}
-                  key={index}
+                  key={obj.img}
                   obj={obj}
                   onAddToCart={onAddToCart}
                   cartItems={cartItems}
+                  favorites={favorites}
                 />
               );
             })}

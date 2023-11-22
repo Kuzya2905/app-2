@@ -1,25 +1,40 @@
 import style from "./card.module.scss";
 import React, { useEffect } from "react";
+import ContentLoader from "react-content-loader";
 
-function Card({ obj, onAddToCart, onAddToFavorites, stateCart }) {
+function Card({
+  obj,
+  onAddToCart,
+  onAddToFavorites,
+  cartItems,
+  favorites,
+  visibleItems,
+  loading,
+}) {
   const [stateBtnPlus, setStateBtnPlus] = React.useState(false);
   const [isFavorite, setIsFavorite] = React.useState(false);
 
+  useEffect(() => {
+    if (cartItems.find((item) => item.img === obj.img)) {
+      setStateBtnPlus(true);
+    }
+  }, [cartItems, obj.img]);
+
+  React.useEffect(() => {
+    if (favorites.find((elem) => elem.img === obj.img)) {
+      setIsFavorite(true);
+    }
+  }, [favorites, obj.img]);
+
   const onClickPlus = () => {
     setStateBtnPlus(!stateBtnPlus);
-    onAddToCart(obj, stateBtnPlus);
+    onAddToCart(obj);
   };
 
   const onClickFavotite = () => {
     setIsFavorite(!isFavorite);
     onAddToFavorites(obj);
   };
-
-  useEffect(() => {
-    if (stateCart) {
-      setStateBtnPlus(false);
-    }
-  }, [stateCart]);
 
   return (
     <div className={style.card}>

@@ -11,7 +11,6 @@ function Cart({
     const body = document.querySelector("body");
     body.className = "body-hidden";
   }
-  console.log(totalSumCart);
 
   return (
     <div
