@@ -1,12 +1,19 @@
 import React from "react";
+import AppContext from "../../context";
+import Info from "../Info/Info";
 
-function Cart({
-  cartItems,
-  onCloseCart,
-  stateCart,
-  onDeleteItemCart,
-  totalSumCart,
-}) {
+function Cart() {
+  const {
+    totalSumCart,
+    stateCart,
+    comeBack,
+    onDeleteItemCart,
+    cartItems,
+    sendOrder,
+    stateOrder,
+    orders,
+  } = React.useContext(AppContext);
+
   if (stateCart) {
     const body = document.querySelector("body");
     body.className = "body-hidden";
@@ -17,7 +24,7 @@ function Cart({
       className="overlay"
       onClick={(e) => {
         if (e.target.className === "overlay") {
-          onCloseCart();
+          comeBack();
         }
       }}
     >
@@ -28,32 +35,20 @@ function Cart({
             className="cart-block-close"
             src="./images/Cart-block/cart-close.svg"
             alt=""
-            onClick={onCloseCart}
+            onClick={comeBack}
           />
         </h2>
-        {cartItems.length === 0 ? (
-          <div className="cart-empty">
-            <img
-              className="cart-empty-box"
-              src="./images/Cart-block/Cart-empty-box.png"
-              alt=""
-            />
-            <h1 className="cart-empty_title">Корзина пустая</h1>
-            <p>Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ.</p>
-            <button onClick={onCloseCart}>
-              <img
-                className="button-pointer"
-                src="./images/Cart-block/Cart-empty-button-pointer.svg"
-                alt=""
-              />
-              <span className="button-p"> Вернуться назад</span>
-            </button>
-          </div>
-        ) : (
+        {cartItems.length === 0 && !stateOrder ? (
+          <Info
+            title="Корзина пустая"
+            description="Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ."
+            image="images\Cart-block\Cart-empty-box.png"
+          />
+        ) : !stateOrder ? (
           <div className="cards-cart">
             {cartItems.map((item) => {
               return (
-                <div key={item.id} className="card-cart">
+                <div key={item.idMain} className="card-cart">
                   <img className="card-cart-img" src={item.img} alt="" />
                   <div className="info">
                     <h2 className="info-h2">{item.name}</h2>
@@ -88,8 +83,21 @@ function Cart({
                   руб.
                 </span>
               </div>
+              <div className="button">
+                <button onClick={sendOrder} className="btn">
+                  Оформить заказ
+                </button>
+              </div>
             </div>
           </div>
+        ) : (
+          <Info
+            image="images\Cart-block\Order-complete.png"
+            title="Заказ оформлен!"
+            description={`Ваш заказ #${
+              orders.length - 1
+            } скоро будет передан курьерской доставке`}
+          />
         )}
       </div>
     </div>

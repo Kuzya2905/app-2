@@ -1,51 +1,86 @@
 import Header from "./components/Header/Header";
 import axios from "axios";
-import Cart from "./components/Cart-block/Cart";
+import Cart from "./components/Cart/Cart";
 import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Favorites from "./pages/Favorites";
+import AppContext from "./context";
+import Orders from "./pages/Orders";
 
 function App() {
   const [items, setItems] = React.useState([]);
   const [visibleItems, setVisibleItems] = React.useState(items);
-
   const [cartItems, setCartItems] = React.useState([]);
-  const [stateCart, setStateCart] = React.useState(false);
-
   const [favorites, setFavorites] = React.useState([]);
+  const [orders, setOrders] = React.useState([]);
+  const [stateOrder, setStateOrder] = React.useState(false);
 
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [stateCart, setStateCart] = React.useState(false);
   const [searchValue, setSearchValue] = React.useState("");
-
   const [totalSumCart, setTotalSumCart] = React.useState();
 
   useEffect(() => {
-    axios
-      .get("https://654f47aa358230d8f0cd2b74.mockapi.io/Items")
-      .then((response) => setItems(response.data));
+    async function fetchData() {
+      const itemsResponse = await axios.get(
+        "https://654f47aa358230d8f0cd2b74.mockapi.io/Items"
+      );
+      const cartResponse = await axios.get(
+        "https://654f47aa358230d8f0cd2b74.mockapi.io/cart"
+      );
+      const favoritesResponse = await axios.get(
+        "https://655672a384b36e3a431fc526.mockapi.io/Favorite"
+      );
+      const orders = await axios.get(
+        "https://655672a384b36e3a431fc526.mockapi.io/Orders"
+      );
 
-    axios
-      .get("https://654f47aa358230d8f0cd2b74.mockapi.io/cart")
-      .then((response) => setCartItems(response.data));
+      setIsLoading(false);
 
-    axios
-      .get("https://655672a384b36e3a431fc526.mockapi.io/Favorite")
-      .then((response) => setFavorites(response.data));
+      setItems(itemsResponse.data);
+      setCartItems(cartResponse.data);
+      setFavorites(favoritesResponse.data);
+      setOrders(orders.data);
+    }
+    fetchData();
   }, []);
 
   useEffect(() => {
     setVisibleItems(items);
   }, [items]);
 
+  const sendOrder = () => {
+    axios
+      .post("https://655672a384b36e3a431fc526.mockapi.io/Orders", cartItems)
+      .then((response) => {
+        setCartItems([]);
+        setOrders((prev) => {
+          if (prev.length === 0) {
+            return [response.data];
+          } else {
+            return [...prev, response.data];
+          }
+        });
+        setStateOrder(!stateOrder);
+      });
+  };
+
   const onAddToCart = (obj) => {
-    if (cartItems.find((item) => item.img === obj.img)) {
-      const itemId = cartItems.find((item) => obj.img === item.img).id;
+    if (cartItems.find((item) => item.idMain === obj.idMain)) {
+      const sereverIdItem = cartItems.find(
+        (item) => obj.idMain === item.idMain
+      ).id;
       axios
         .delete(
-          `https://654f47aa358230d8f0cd2b74.mockapi.io/cart/${String(itemId)}`
+          `https://654f47aa358230d8f0cd2b74.mockapi.io/cart/${String(
+            sereverIdItem
+          )}`
         )
         .then(() => {
-          setCartItems((prev) => prev.filter((item) => item.img !== obj.img));
+          setCartItems((prev) =>
+            prev.filter((item) => item.idMain !== obj.idMain)
+          );
         });
     } else {
       axios
@@ -55,16 +90,20 @@ function App() {
   };
 
   const onAddToFavorites = (obj) => {
-    if (favorites.find((item) => item.img === obj.img)) {
-      const itemId = favorites.find((item) => item.img === obj.img).id;
+    if (favorites.find((item) => item.idMain === obj.idMain)) {
+      const sereverIdItem = favorites.find(
+        (item) => obj.idMain === item.idMain
+      ).id;
       axios
         .delete(
           `https://655672a384b36e3a431fc526.mockapi.io/Favorite/${String(
-            itemId
+            sereverIdItem
           )}`
         )
         .then(() => {
-          setFavorites((prev) => prev.filter((item) => item.img !== obj.img));
+          setFavorites((prev) =>
+            prev.filter((item) => item.idMain !== obj.idMain)
+          );
         });
     } else {
       axios
@@ -95,8 +134,9 @@ function App() {
     }
   };
 
-  const onCloseCart = () => {
+  const comeBack = () => {
     setStateCart(!stateCart);
+    setStateOrder(false);
     const body = document.querySelector("body");
     body.className = "";
   };
@@ -117,50 +157,44 @@ function App() {
     setStateCart(!stateCart);
   };
 
-  return (
-    <div className="wrapper">
-      <Header openCart={openCart} totalSumCart={totalSumCart} />
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Home
-              searchItems={searchItems}
-              setSearchValue={setSearchValue}
-              searchValue={searchValue}
-              visibleItems={visibleItems}
-              onAddToFavorites={onAddToFavorites}
-              onAddToCart={onAddToCart}
-              cartItems={cartItems}
-              stateCart={stateCart}
-              favorites={favorites}
-            />
-          }
-        />
-        <Route
-          path="/favorites"
-          element={
-            <Favorites
-              favorites={favorites}
-              onAddToCart={onAddToCart}
-              onDeleteFavorites={onDeleteFavorites}
-              cartItems={cartItems}
-            />
-          }
-        ></Route>
-      </Routes>
+  const counterFavorites = () => {
+    return favorites.length;
+  };
 
-      {stateCart ? (
-        <Cart
-          totalSumCart={totalSumCart}
-          sumCart={sumCart}
-          stateCart={stateCart}
-          cartItems={cartItems}
-          onCloseCart={onCloseCart}
-          onDeleteItemCart={onDeleteItemCart}
-        />
-      ) : null}
-    </div>
+  return (
+    <AppContext.Provider
+      value={{
+        favorites,
+        cartItems,
+        searchValue,
+        visibleItems,
+        totalSumCart,
+        stateCart,
+        isLoading,
+        stateOrder,
+        orders,
+        onDeleteFavorites,
+        onAddToCart,
+        onAddToFavorites,
+        searchItems,
+        setSearchValue,
+        comeBack,
+        onDeleteItemCart,
+        openCart,
+        sendOrder,
+        counterFavorites,
+      }}
+    >
+      <div className="wrapper">
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/favorites" element={<Favorites />}></Route>
+          <Route path="/orders" element={<Orders />}></Route>
+        </Routes>
+        {stateCart ? <Cart /> : null}
+      </div>
+    </AppContext.Provider>
   );
 }
 

@@ -1,7 +1,13 @@
 import Card from '../components/Card/Card';
 import Carousel from "../components/Carousel/Carousel";
+import AppContext from '../context';
+import React from 'react';
 
-function Home({searchItems, setSearchValue, searchValue, visibleItems, onAddToFavorites, onAddToCart, cartItems, stateCart, favorites}) {
+function Home() {
+  const {isLoading, searchItems, setSearchValue, searchValue, visibleItems} = React.useContext(AppContext);
+
+  const emptyCards = [{idMain: 1}, {idMain: 2}, {idMain: 3}, {idMain: 4}, {idMain: 5}, {idMain: 6}, {idMain: 7}, {idMain: 8}]
+
   return (
     <main>
         <Carousel />
@@ -21,17 +27,11 @@ function Home({searchItems, setSearchValue, searchValue, visibleItems, onAddToFa
             />
           </div>
           <div className="cards">
-            {visibleItems.map((obj, index) => {
+            {(isLoading ? emptyCards: visibleItems).map((obj) => {
               return (
                 <Card
-                  visibleItems = {visibleItems}
-                  stateCart={stateCart}
-                  onAddToFavorites={onAddToFavorites}
-                  key={obj.img}
+                  key={obj.idMain}
                   obj={obj}
-                  onAddToCart={onAddToCart}
-                  cartItems={cartItems}
-                  favorites={favorites}
                 />
               );
             })}

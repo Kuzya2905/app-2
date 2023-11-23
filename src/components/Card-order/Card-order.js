@@ -1,28 +1,37 @@
+import { useContext } from "react";
 import style from "./card.module.scss";
 import React from "react";
+import AppContext from "../../context";
 
-function CardFavorite({
-  item,
-  onDeleteFavorites,
-  onAddToCart,
-  stateCart,
-  cartItems,
-}) {
+function CardOrder({ item, onDeleteFavorites, orders }) {
+  const { onAddToCart, cartItems, favorites, onAddToFavorites } =
+    useContext(AppContext);
   const isItemAdded = () => cartItems.some((obj) => obj.idMain === item.idMain);
 
-  const onClickPlus = (item) => {
+  console.log(item);
+
+  const onClickPlus = () => {
     onAddToCart(item);
   };
+
+  const onClickFavotite = () => {
+    onAddToFavorites(item);
+  };
+
+  const isItemFavorite = () =>
+    favorites.some((elem) => elem.idMain === item.idMain);
 
   return (
     <div className={style.card}>
       <button className={style.like}>
         <img
-          src={"./images/card-1-liked.svg"}
+          src={
+            isItemFavorite()
+              ? "./images/card-1-liked.svg"
+              : "./images/card-1-unliked.svg"
+          }
           alt=""
-          onClick={() => {
-            onDeleteFavorites(item.id);
-          }}
+          onClick={onClickFavotite}
         />
       </button>
       <img className={style.img} src={item.img} alt="card-img" />
@@ -40,11 +49,11 @@ function CardFavorite({
               : "./images/card-1-plus.svg"
           }
           alt=""
-          onClick={() => onClickPlus(item)}
+          onClick={() => onClickPlus()}
         />
       </div>
     </div>
   );
 }
 
-export default CardFavorite;
+export default CardOrder;

@@ -22,6 +22,7 @@ button {
   background-color:transparent; 
 }
 h1, h2, h3 {
+  font-style: normal;
   line-height: normal;
 }
 .wrapper {
@@ -157,6 +158,7 @@ h1, h2, h3 {
 .search {
   padding-left: 20px;
   padding-right: 20px;
+  padding-bottom: 5px;
   max-width: 250px;
   height: 45px;
   border-radius: 10px;
@@ -214,17 +216,17 @@ h1, h2, h3 {
         height: 50px;
       }
     }
-    .cart-empty {
+    .cart-state {
       display: flex;
       flex-direction: column;
       margin: 0 30px;
       margin-top: 310px;
 
-      .cart-empty-box {
+      .cart-state-img {
         width: 120px;
         margin: 0 auto;
       }
-      .cart-empty-title {
+      .cart-state-title {
         font-size: 22px;
         font-weight: 600;
         margin: 0 auto;
@@ -256,7 +258,6 @@ h1, h2, h3 {
           text-align: center;
           font-size: 16px;
           font-weight: 600;
-
         }
       }
     }
@@ -324,6 +325,7 @@ h1, h2, h3 {
         max-width: 400px;
         margin: 0 10%;
         display: flex;
+        padding: 0;
         .line {
           display: block;
           flex-grow: 1;
@@ -335,9 +337,70 @@ h1, h2, h3 {
           font-weight: 600;
         }
       }
+      .button {
+        margin: 12px auto;
+        margin-bottom: 30px;
+        .btn{
+          color: #FFF;
+          text-align: center;
+          font-size: 16px;
+          font-weight: 600;
+          line-height: normal;
+          width: 325px;
+          height: 55px;
+          border-radius: 18px;
+          background: #9DD458;
+        }
+      }
     }
-    
-
+  }
+}
+.empty-page {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  img {
+    width: 70px;
+    display: block;
+    margin: auto;
+  }
+  h1 {
+    margin: auto;
+    text-align: center;
+    font-family: Inter;
+    font-size: 24px;
+    font-weight: 600;
+    margin-top: 29px;
+  }
+  p {
+    color: #000;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 400;
+    opacity: 0.4;
+    margin-top: 11px;
+    line-height: 25px;
+  }
+  button {
+    width: 245px;
+    height: 55px;
+    border-radius: 18px;
+    background: #9DD458;
+    margin: 40px auto;
+    display: flex;
+    align-items: center;
+    img {
+      margin-left: 31px;
+      width: 30px;
+    }
+    .button-p {
+      width: 245px;
+      color: #FFF;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 600;
+    }
   }
 }
 
