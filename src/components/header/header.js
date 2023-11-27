@@ -22,13 +22,13 @@ function Header() {
           <img src="./images/header_cart.svg" alt="cart" />
           <span className="text">{totalSumCart} руб.</span>
         </li>
-        <Link to="/favorites">
+        <Link to="/app-2/favorites">
           <li className="bookmarks" color="color_red">
             <img src="./images/header_bookmarks.svg" alt="bookmarks" />
             <span className="text">Закладки {counterFavorites()}</span>
           </li>
         </Link>
-        <Link to="/orders">
+        <Link to="/app-2/orders">
           <li className="profile">
             <img src="./images/header_profile.svg" alt="profile" />
             <span className="text">Профиль</span>
