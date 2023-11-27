@@ -8,7 +8,7 @@ function Header() {
 
   return (
     <header className="header">
-      <Link to="/">
+      <Link to="/app-2/">
         <div className="header-left">
           <img src="./images/header_logo.svg" alt="logo" />
           <div className="info">

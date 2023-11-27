@@ -197,7 +197,7 @@ function App() {
       <div className="wrapper">
         <Header />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/app-2/" element={<Home />} />
           <Route path="/favorites" element={<Favorites />}></Route>
           <Route path="/orders" element={<Orders />}></Route>
         </Routes>
