@@ -40,7 +40,7 @@ function Favorites() {
                 <img src="images\Favorties\Smile.png" alt="" />
                 <h1>{`Закладок нет :(`}</h1>
                 <p>Вы ничего не добавляли в закладки</p>
-                <Link to='/'>
+                <Link to='kuzya2905.github.io/app-2/'>
                   <button >
                     <img
                       className="button-pointer"
