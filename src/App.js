@@ -17,6 +17,7 @@ function App() {
   const [stateOrder, setStateOrder] = React.useState(false);
 
   const [isLoading, setIsLoading] = React.useState(true);
+  const [orderBtnLoading, setOrderBtnLoading] = React.useState(false);
   const [stateCart, setStateCart] = React.useState(false);
   const [searchValue, setSearchValue] = React.useState("");
   const [totalSumCart, setTotalSumCart] = React.useState();
@@ -50,20 +51,27 @@ function App() {
     setVisibleItems(items);
   }, [items]);
 
-  const sendOrder = () => {
-    axios
-      .post("https://655672a384b36e3a431fc526.mockapi.io/Orders", cartItems)
-      .then((response) => {
-        setCartItems([]);
-        setOrders((prev) => {
-          if (prev.length === 0) {
-            return [response.data];
-          } else {
-            return [...prev, response.data];
-          }
-        });
-        setStateOrder(!stateOrder);
-      });
+  const sendOrder = async () => {
+    setOrderBtnLoading(true);
+    const { data } = await axios.post(
+      "https://655672a384b36e3a431fc526.mockapi.io/Orders",
+      cartItems
+    );
+    for (let i = 0; i < cartItems.length; i++) {
+      await axios.delete(
+        `https://654f47aa358230d8f0cd2b74.mockapi.io/cart/${cartItems[i].id}`
+      );
+    }
+    setCartItems([]);
+    setOrders((prev) => {
+      if (prev.length === 0) {
+        return [data];
+      } else {
+        return [...prev, data];
+      }
+    });
+    setStateOrder(!stateOrder);
+    setOrderBtnLoading(false);
   };
 
   const onAddToCart = (obj) => {
@@ -173,6 +181,7 @@ function App() {
         isLoading,
         stateOrder,
         orders,
+        orderBtnLoading,
         onDeleteFavorites,
         onAddToCart,
         onAddToFavorites,

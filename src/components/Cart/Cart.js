@@ -12,6 +12,7 @@ function Cart() {
     sendOrder,
     stateOrder,
     orders,
+    orderBtnLoading,
   } = React.useContext(AppContext);
 
   if (stateCart) {
@@ -84,7 +85,11 @@ function Cart() {
                 </span>
               </div>
               <div className="button">
-                <button onClick={sendOrder} className="btn">
+                <button
+                  disabled={orderBtnLoading}
+                  onClick={sendOrder}
+                  className="btn"
+                >
                   Оформить заказ
                 </button>
               </div>
