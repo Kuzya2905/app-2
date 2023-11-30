@@ -42,7 +42,7 @@ function Favorites() {
                 <img src="images\Orders\Smile.jpg" alt="" />
                 <h1>{`У вас нет заказов :(`}</h1>
                 <p>Заказов нет<br />Оформите хотя бы один заказ.</p>
-                <Link to=''>
+                <Link to='app-2/'>
                   <button >
                     <img
                       className="button-pointer"

@@ -197,9 +197,9 @@ function App() {
       <div className="wrapper">
         <Header />
         <Routes>
-          <Route path="" element={<Home />} />
-          <Route path="favorites" element={<Favorites />}></Route>
-          <Route path="orders" element={<Orders />}></Route>
+          <Route path="/" element={<Home />} />
+          <Route path="/favorites" element={<Favorites />}></Route>
+          <Route path="/orders" element={<Orders />}></Route>
         </Routes>
         {stateCart ? <Cart /> : null}
       </div>
