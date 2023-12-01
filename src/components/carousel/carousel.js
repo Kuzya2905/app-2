@@ -6,21 +6,36 @@ function Carousel() {
           <div className="carousel-item active">
             <img
               src="./images/main_carousel_1.jpg"
-              className="d-block w-100"
+              className="d-block w-100 carousel-img-main"
+              alt="carousel"
+            />
+            <img
+              src="./images/main_carousel_2.jpg"
+              className="d-block w-100 carousel-img-mobile"
               alt="carousel"
             />
           </div>
           <div className="carousel-item">
             <img
               src="./images/main_carousel_1.jpg"
-              className="d-block w-100"
+              className="d-block w-100 carousel-img-main"
+              alt="carousel"
+            />
+            <img
+              src="./images/main_carousel_2.jpg"
+              className="d-block w-100 carousel-img-mobile"
               alt="carousel"
             />
           </div>
           <div className="carousel-item">
             <img
               src="./images/main_carousel_1.jpg"
-              className="d-block w-100"
+              className="d-block w-100 carousel-img-main"
+              alt="carousel"
+            />
+            <img
+              src="./images/main_carousel_2.jpg"
+              className="d-block w-100 carousel-img-mobile"
               alt="carousel"
             />
           </div>

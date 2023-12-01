@@ -1,4 +1,3 @@
-import style from "./card.module.scss";
 import React from "react";
 import ContentLoader from "react-content-loader";
 import AppContext from "../../context";
@@ -40,8 +39,8 @@ function Card({ obj }) {
           <rect x="115" y="154" rx="8" ry="8" width="32" height="32" />
         </ContentLoader>
       ) : (
-        <div className={style.card}>
-          <button className={style.like}>
+        <div className="card">
+          <button className="like">
             <img
               src={
                 isItemFavorite()
@@ -52,15 +51,15 @@ function Card({ obj }) {
               onClick={onClickFavotite}
             />
           </button>
-          <img className={style.img} src={obj.img} alt="card-img" />
-          <h2 className={style.title}>{obj.name}</h2>
-          <div className={style.info}>
-            <div className={style.price}>
-              <h2 className={style.title}>ЦЕНА:</h2>
-              <span className={style.sum}>{obj.price} руб.</span>
+          <img className="img" src={obj.img} alt="card-img" />
+          <h2 className="title">{obj.name}</h2>
+          <div className="info">
+            <div className="price">
+              <h2 className="title">ЦЕНА:</h2>
+              <span className="sum">{obj.price} руб.</span>
             </div>
             <img
-              className={style.btn}
+              className="btn"
               src={
                 isItemAdded()
                   ? "./images/card-1-plus-active.svg"

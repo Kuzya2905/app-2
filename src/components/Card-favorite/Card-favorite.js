@@ -1,4 +1,3 @@
-import style from "./card.module.scss";
 import React from "react";
 import AppContext from "../../context";
 
@@ -14,8 +13,8 @@ function CardFavorite({ item }) {
 
   return (
     <>
-      <div className={style.card}>
-        <button className={style.like}>
+      <div className="card">
+        <button className="like">
           <img
             src={"./images/card-1-liked.svg"}
             alt=""
@@ -24,15 +23,15 @@ function CardFavorite({ item }) {
             }}
           />
         </button>
-        <img className={style.img} src={item.img} alt="card-img" />
-        <h2 className={style.title}>{item.name}</h2>
-        <div className={style.info}>
-          <div className={style.price}>
-            <h2 className={style.title}>ЦЕНА:</h2>
-            <span className={style.sum}>{item.price} руб.</span>
+        <img className="img" src={item.img} alt="card-img" />
+        <h2 className="title">{item.name}</h2>
+        <div className="info">
+          <div className="price">
+            <h2 className="title">ЦЕНА:</h2>
+            <span className="sum">{item.price} руб.</span>
           </div>
           <img
-            className={style.btn}
+            className="btn"
             src={
               isItemAdded()
                 ? "./images/card-1-plus-active.svg"
