@@ -1,4 +1,4 @@
-import Card from '../components/Card/Card';
+import Card from "../components/Card/Сard";
 import Carousel from "../components/Carousel/Carousel";
 import AppContext from '../context';
 import React from 'react';
